@@ -4,29 +4,21 @@ import bcrypt from 'bcryptjs'
 const prisma = new PrismaClient()
 
 async function main() {
+  // Clear existing data
+  await prisma.product.deleteMany()
+  await prisma.category.deleteMany()
+
   // Create categories
-  const electronics = await prisma.category.upsert({
-    where: { name: 'Electronics' },
-    update: {},
-    create: {
-      name: 'Electronics',
-    },
+  const electronics = await prisma.category.create({
+    data: { name: 'Electronics' },
   })
 
-  const clothing = await prisma.category.upsert({
-    where: { name: 'Clothing' },
-    update: {},
-    create: {
-      name: 'Clothing',
-    },
+  const clothing = await prisma.category.create({
+    data: { name: 'Clothing' },
   })
 
-  const home = await prisma.category.upsert({
-    where: { name: 'Home & Garden' },
-    update: {},
-    create: {
-      name: 'Home & Garden',
-    },
+  const home = await prisma.category.create({
+    data: { name: 'Home & Garden' },
   })
 
   // Create products with real image URLs
@@ -104,11 +96,7 @@ async function main() {
   ]
 
   for (const product of products) {
-    await prisma.product.upsert({
-      where: { name: product.name },
-      update: {},
-      create: product,
-    })
+    await prisma.product.create({ data: product })
   }
 
   // Create a test user
