@@ -7,7 +7,7 @@ interface Product {
   name: string
   description: string
   price: number
-  image: string
+  imageUrl: string
   category: {
     name: string
   }
@@ -63,7 +63,7 @@ export default function Products() {
           <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
             <div className="aspect-square">
               <img
-                src={product.image}
+                src={product.imageUrl}
                 alt={product.name}
                 className="w-full h-full object-cover"
                 onError={(e) => {
